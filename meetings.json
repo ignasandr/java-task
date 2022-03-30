@@ -1,0 +1,27 @@
+[ {
+  "id" : "43462a56-1926-4256-97db-639e108ba323",
+  "name" : "Test meeting",
+  "description" : "Testing meeting creation",
+  "category" : "SHORT",
+  "type" : "LIVE",
+  "attendees" : [ {
+    "id" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+    "timestamp" : 1648628777.603511100
+  } ],
+  "responsible" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+  "start" : [ 2022, 8, 1, 9, 0 ],
+  "end" : [ 2022, 8, 1, 10, 0 ]
+}, {
+  "id" : "f7cc801e-8a83-41f5-8e56-c29a41a86e9a",
+  "name" : "Test meeting",
+  "description" : "Testing meeting creation",
+  "category" : "SHORT",
+  "type" : "LIVE",
+  "attendees" : [ {
+    "id" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+    "timestamp" : 1648629856.809419800
+  } ],
+  "responsible" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+  "start" : [ 2022, 8, 1, 9, 0 ],
+  "end" : [ 2022, 8, 1, 10, 0 ]
+} ]

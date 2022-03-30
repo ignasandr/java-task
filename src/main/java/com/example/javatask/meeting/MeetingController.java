@@ -12,7 +12,6 @@ public class MeetingController {
 
     private final MeetingService meetingService;
 
-    @Autowired
     public MeetingController(MeetingService meetingService) { this.meetingService = meetingService; }
 
     @PostMapping
@@ -26,15 +25,6 @@ public class MeetingController {
         meetingService.deleteMeeting(meetingId, userId);
     }
 
-    @PostMapping(path= "attendees/{meetingId}/{userId}")
-        public void addPerson(@PathVariable("meetingId") UUID meetingId, @PathVariable("userId") UUID userId) {
-        meetingService.addPerson(meetingId, userId);
-    }
-
-    @DeleteMapping(path= "attendees/{meetingId}/{userId}")
-        public void removePerson(@PathVariable("meetingId") UUID meetingId, @PathVariable("userId") UUID userId) {
-        meetingService.removePerson(meetingId, userId);
-    }
 
     @PostMapping(path="filter")
         public List<Meeting> filterMeetings(@RequestBody MeetingFilter meetingFilter) { return meetingService.filterMeetings(meetingFilter); }
