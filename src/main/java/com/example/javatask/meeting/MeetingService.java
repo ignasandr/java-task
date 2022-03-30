@@ -33,9 +33,7 @@ public class MeetingService {
         return id;
     }
 
-    public List<Meeting> selectAllMeetings() {
-        DB = readFromFile();
-        return DB; }
+    public List<Meeting> selectAllMeetings() { return DB; }
 
     public Meeting selectMeetingById(UUID id) {
         return DB.stream()
@@ -61,37 +59,33 @@ public class MeetingService {
         }
         switch(meetingFilter.getFilter()) {
             case DESCRIPTION:
-                return filterBy(meetingFilter, (meeting -> meeting.getDescription().toLowerCase().contains(meetingFilter.getParam1().toLowerCase())));
+                return filterBy((meeting -> meeting.getDescription().toLowerCase().contains(meetingFilter.getParam1().toLowerCase())));
             case RESPONSIBLE_PERSON:
                 UUID id = UUID.fromString(meetingFilter.getParam1());
-                return  DB.stream()
-                        .filter(meeting -> meeting.getResponsiblePerson().equals(id))
-                        .collect(Collectors.toList());
+                return filterBy((meeting -> meeting.getResponsiblePerson().equals(id)));
             case CATEGORY:
-                return filterBy(meetingFilter, (meeting -> meeting.getCategory().name().equals(meetingFilter.getParam1())));
+                return filterBy((meeting -> meeting.getCategory().name().equals(meetingFilter.getParam1())));
             case TYPE:
-                return filterBy(meetingFilter, (meeting -> meeting.getType().name().equals(meetingFilter.getParam1())));
+                return filterBy((meeting -> meeting.getType().name().equals(meetingFilter.getParam1())));
             case DATE:
                 LocalDateTime start = LocalDateTime.parse(meetingFilter.getParam1());
+                List<Meeting> meetingsUntilDate = filterBy((meeting -> meeting.getStartDate().compareTo(start) > 0));
                 if (meetingFilter.getParam2() != null) {
                     LocalDateTime end = LocalDateTime.parse(meetingFilter.getParam2());
-                    return DB.stream()
-                            .filter(meeting -> meeting.getStartDate().compareTo(start) > 0)
+                    return meetingsUntilDate.stream()
                             .filter(meeting -> meeting.getStartDate().compareTo(end) < 0)
                             .collect(Collectors.toList());
                 } else {
-                    return DB.stream()
-                            .filter(meeting -> meeting.getStartDate().compareTo(start) > 0)
-                            .collect(Collectors.toList());
+                    return meetingsUntilDate;
                 }
             case ATTENDEES:
-                return filterBy(meetingFilter, (meeting -> meeting.getAttendees().size() <= Integer.parseInt(meetingFilter.getParam1())));
+                return filterBy((meeting -> meeting.getAttendees().size() <= Integer.parseInt(meetingFilter.getParam1())));
             default:
                 throw new ApiRequestException("Filter not specified");
         }
     }
 
-    private List<Meeting> filterBy(MeetingFilter meetingFilter, Predicate<? extends Meeting> predicate) {
+    private List<Meeting> filterBy(Predicate<? extends Meeting> predicate) {
         return DB.stream()
                 .filter((Predicate<? super Meeting>) predicate)
                 .collect(Collectors.toList());
