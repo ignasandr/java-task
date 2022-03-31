@@ -20,38 +20,30 @@ public class MeetingService {
 
     public MeetingService(MeetingRepository meetingRepository) { this.meetingRepository = meetingRepository; }
 
-    private static List<Meeting> DB = new ArrayList<>();
-
     public UUID createMeeting(Meeting meeting) {
         List<Attendee> attendees = new ArrayList<>();
         UUID id = UUID.randomUUID();
         attendees.add(new Attendee(meeting.getResponsiblePerson(), ZonedDateTime.now(ZoneId.of("Z"))));
-        DB.add(new Meeting(id, meeting.getName(), meeting.getResponsiblePerson(),
+        meetingRepository.getMeetings().add(new Meeting(id, meeting.getName(), meeting.getResponsiblePerson(),
                 meeting.getDescription(), meeting.getCategory(), meeting.getType(),
                 meeting.getStartDate(), meeting.getEndDate(), attendees));
-        writeToFile();
+        meetingRepository.writeToFile();
         return id;
     }
 
-    public List<Meeting> selectAllMeetings() { return DB; }
-
-    public Meeting selectMeetingById(UUID id) {
-        return DB.stream()
-                .filter(meeting -> meeting.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Meeting ID not found"));
-    }
 
     public void deleteMeeting(UUID meetingId, UUID userId) {
-        Meeting meeting = selectMeetingById(meetingId);
+        Meeting meeting = meetingRepository.selectMeetingById(meetingId);
         if (!meeting.getResponsiblePerson().equals(userId) ) {
             throw new ApiRequestException("Access denied");
         }
-        DB.remove(meeting);
-        writeToFile();
+        meetingRepository.getMeetings().remove(meeting);
+        meetingRepository.writeToFile();
     }
 
-
+    public List<Meeting> selectAllMeetings() {
+        return meetingRepository.getMeetings();
+    }
 
     public List<Meeting> filterMeetings(MeetingFilter meetingFilter) {
         if(meetingFilter.getParam1() == null) {
@@ -86,18 +78,8 @@ public class MeetingService {
     }
 
     private List<Meeting> filterBy(Predicate<? extends Meeting> predicate) {
-        return DB.stream()
+        return meetingRepository.getMeetings().stream()
                 .filter((Predicate<? super Meeting>) predicate)
                 .collect(Collectors.toList());
-    }
-
-    public void writeToFile() {
-        meetingRepository.writeToFile(DB);
-    }
-
-    public List<Meeting> readFromFile() {
-        List<Meeting> meetings = new ArrayList<>();
-        meetings = meetingRepository.readFromFile();
-        return meetings;
     }
 }
