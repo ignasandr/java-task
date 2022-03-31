@@ -5,8 +5,11 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +19,7 @@ import java.util.UUID;
 @Repository
 public class MeetingRepository {
 
-    private static List<Meeting> DB = new ArrayList<>();
+    private List<Meeting> DB = new ArrayList<>();
 
     public List<Meeting> getMeetings() { return DB; }
 
@@ -48,5 +51,17 @@ public class MeetingRepository {
             ex.printStackTrace();
         }
         throw new ApiRequestException("Could not read file");
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void loadFile() {
+        File f = new File("meetings.json");
+        if(f.exists()) {
+            if (readFromFile().size() > 0) {
+                for (int i = 0; i < readFromFile().size(); i++) {
+                    DB.add(readFromFile().get(i));
+                }
+            }
+        }
     }
 }

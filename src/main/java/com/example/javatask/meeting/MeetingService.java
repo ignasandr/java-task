@@ -24,9 +24,11 @@ public class MeetingService {
         List<Attendee> attendees = new ArrayList<>();
         UUID id = UUID.randomUUID();
         attendees.add(new Attendee(meeting.getResponsiblePerson(), ZonedDateTime.now(ZoneId.of("Z"))));
-        meetingRepository.getMeetings().add(new Meeting(id, meeting.getName(), meeting.getResponsiblePerson(),
-                meeting.getDescription(), meeting.getCategory(), meeting.getType(),
-                meeting.getStartDate(), meeting.getEndDate(), attendees));
+
+        meeting.setId(id);
+        meeting.setAttendees(attendees);
+
+        meetingRepository.getMeetings().add(meeting);
         meetingRepository.writeToFile();
         return id;
     }

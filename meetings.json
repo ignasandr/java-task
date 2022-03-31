@@ -1,14 +1,46 @@
 [ {
-  "id" : "789a0481-2ee3-4d4c-930e-c94aac5f7ad0",
+  "id" : "3ef0fbee-f21c-401a-afc5-b2ab9fb220a9",
   "name" : "Test meeting",
   "description" : "Testing meeting creation",
   "category" : "SHORT",
   "type" : "LIVE",
   "attendees" : [ {
     "id" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
-    "timestamp" : 1648737773.575832600
+    "timestamp" : 1648754038.990237600
+  }, {
+    "id" : "789a0481-2ee3-4d4c-930e-c94aac5f7ad0",
+    "timestamp" : 1648754096.062165100
+  }, {
+    "id" : "789a0481-2ee3-4d4c-930e-c94aac5f7ad1",
+    "timestamp" : 1648754106.407054500
   } ],
   "responsible" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
-  "start" : [ 2022, 3, 1, 9, 0 ],
-  "end" : [ 2022, 3, 1, 10, 0 ]
+  "start" : [ 2022, 6, 1, 9, 0 ],
+  "end" : [ 2022, 6, 1, 10, 0 ]
+}, {
+  "id" : "8c9435bb-e2f6-4f5b-8dc1-ecb74f7308d8",
+  "name" : "Test meeting",
+  "description" : "Testing meeting creation",
+  "category" : "SHORT",
+  "type" : "LIVE",
+  "attendees" : [ {
+    "id" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+    "timestamp" : 1648754054.699521300
+  } ],
+  "responsible" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+  "start" : [ 2022, 6, 1, 9, 0 ],
+  "end" : [ 2022, 6, 1, 10, 0 ]
+}, {
+  "id" : "b19850b7-d1fd-495e-9f8b-026b8b3a19cc",
+  "name" : "Test meeting",
+  "description" : "Testing meeting creation",
+  "category" : "SHORT",
+  "type" : "LIVE",
+  "attendees" : [ {
+    "id" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+    "timestamp" : 1648754055.434697400
+  } ],
+  "responsible" : "04b6e01e-862e-4ae6-bc1d-8918d1233207",
+  "start" : [ 2022, 6, 1, 9, 0 ],
+  "end" : [ 2022, 6, 1, 10, 0 ]
 } ]
